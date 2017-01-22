@@ -1,6 +1,7 @@
 package com.libgdx.triception;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.libgdx.triception.screens.MainGameScreen;
 
 public class Triception extends ApplicationAdapter {
 
