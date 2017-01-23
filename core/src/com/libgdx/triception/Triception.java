@@ -1,15 +1,37 @@
 package com.libgdx.triception;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
 import com.libgdx.triception.screens.MainGameScreen;
 
-public class Triception extends ApplicationAdapter {
+public class Triception implements ApplicationListener{
 
     public static final MainGameScreen _mainGameScreen = new MainGameScreen();
 
     @Override
     public void create() {
-        setScreen(_mainGameScreen);
+        _mainGameScreen.show();
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void render() {
+        _mainGameScreen.render(Gdx.graphics.getDeltaTime());
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
     }
 
     @Override

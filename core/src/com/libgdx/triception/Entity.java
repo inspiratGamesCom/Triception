@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Array;
 public class Entity {
 
     private static final String TAG = Entity.class.getSimpleName();
-    private static final String _defaultSpritePath = "sprites/characters/Warrior.png";
+    private static final String _defaultSpritePath = "textures/Warrior.png";
 
     private Vector2 _velocity;
     private String _entityID;
