@@ -42,9 +42,9 @@ public class PlayerController implements InputProcessor {
     ;
 
     private Vector3 lastMouseCoordinates;
-    private Entity _player;
+    private Entity2 _player;
 
-    public PlayerController(Entity player) {
+    public PlayerController(Entity2 player) {
         this.lastMouseCoordinates = new Vector3();
         this._player = player;
     }
@@ -219,32 +219,32 @@ public class PlayerController implements InputProcessor {
     private void processInput(float delta) {
 //Keyboard input
         if (keys.get(Keys.LEFT)) {
-            _player.calculateNextPosition(Entity.Direction.LEFT, delta);
-            _player.setState(Entity.State.WALKING);
-            _player.setDirection(Entity.Direction.LEFT, delta);
+            _player.calculateNextPosition(Entity2.Direction.LEFT, delta);
+            _player.setState(Entity2.State.WALKING);
+            _player.setDirection(Entity2.Direction.LEFT, delta);
 
         } else if (keys.get(Keys.RIGHT)) {
-            _player.calculateNextPosition(Entity.Direction.RIGHT,
+            _player.calculateNextPosition(Entity2.Direction.RIGHT,
                     delta);
-            _player.setState(Entity.State.WALKING);
-            _player.setDirection(Entity.Direction.RIGHT, delta);
+            _player.setState(Entity2.State.WALKING);
+            _player.setDirection(Entity2.Direction.RIGHT, delta);
 
         } else if (keys.get(Keys.UP)) {
-            _player.calculateNextPosition(Entity.Direction.UP, delta);
-            _player.setState(Entity.State.WALKING);
-            _player.setDirection(Entity.Direction.UP, delta);
+            _player.calculateNextPosition(Entity2.Direction.UP, delta);
+            _player.setState(Entity2.State.WALKING);
+            _player.setDirection(Entity2.Direction.UP, delta);
 
         } else if (keys.get(Keys.DOWN)) {
-            _player.calculateNextPosition(Entity.Direction.DOWN,
+            _player.calculateNextPosition(Entity2.Direction.DOWN,
                     delta);
-            _player.setState(Entity.State.WALKING);
-            _player.setDirection(Entity.Direction.DOWN, delta);
+            _player.setState(Entity2.State.WALKING);
+            _player.setDirection(Entity2.Direction.DOWN, delta);
 
         } else if (keys.get(Keys.QUIT)) {
             Gdx.app.exit();
 
         } else {
-            _player.setState(Entity.State.IDLE);
+            _player.setState(Entity2.State.IDLE);
         }
 //Mouse input
         if (mouseButtons.get(Mouse.SELECT)) {

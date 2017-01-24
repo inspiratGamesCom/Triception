@@ -1,19 +1,20 @@
-package com.libgdx.triception;
+package com.libgdx.triception.esc;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
+import com.libgdx.triception.Entity2;
+import com.libgdx.triception.maps.MapManager;
 
 import java.util.ArrayList;
 
-public class Entity1 {
+public class Entity {
 
-    private static final String TAG = Entity.class.getSimpleName();
+    private static final String TAG = Entity2.class.getSimpleName();
 
     public static enum Direction {
         UP,
@@ -44,7 +45,7 @@ public class Entity1 {
         IMMOBILE;//This should always be last
 
         static public State getRandomNext() {
-            //Ignore IMMOBILE which should be last state
+            //Ignore IMMOBILE which should be last _currentState
             return State.values()[MathUtils.random(State.values().length - 2)];
         }
     }
@@ -124,6 +125,7 @@ public class Entity1 {
     }
 
     static public Array<EntityConfig> getEntityConfigs(String configFilePath) {
+
         Json json = new Json();
         Array<EntityConfig> configs = new Array<EntityConfig>();
         ArrayList<JsonValue> list = json.fromJson(ArrayList.class, Gdx.files.internal(configFilePath));

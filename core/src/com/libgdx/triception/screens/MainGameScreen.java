@@ -11,8 +11,8 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.libgdx.triception.Entity;
-import com.libgdx.triception.MapManager;
+import com.libgdx.triception.Entity2;
+import com.libgdx.triception.maps.MapManager;
 import com.libgdx.triception.PlayerController;
 
 public class MainGameScreen implements Screen {
@@ -40,7 +40,7 @@ public class MainGameScreen implements Screen {
         _mapMgr = new MapManager();
     }
 
-    private static Entity _player;
+    private static Entity2 _player;
 
     @Override
     public void show() {
@@ -54,7 +54,7 @@ public class MainGameScreen implements Screen {
                 (_mapMgr.getCurrentMap(), MapManager.UNIT_SCALE);
         _mapRenderer.setView(_camera);
         Gdx.app.debug(TAG, "UnitScale value is:" + _mapRenderer.getUnitScale());
-        _player = new Entity();
+        _player = new Entity2();
         _player.init(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y);
         _currentPlayerSprite = _player.getFrameSprite();
         _controller = new PlayerController(_player);

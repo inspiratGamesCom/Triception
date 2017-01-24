@@ -11,9 +11,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
-public class Entity {
+public class Entity2 {
 
-    private static final String TAG = Entity.class.getSimpleName();
+    private static final String TAG = Entity2.class.getSimpleName();
     private static final String _defaultSpritePath = "textures/Warrior.png";
 
     private Vector2 _velocity;
@@ -47,7 +47,7 @@ public class Entity {
     public final int FRAME_HEIGHT = 16;
     public static Rectangle boundingBox;
 
-    public Entity() {
+    public Entity2() {
         initEntity();
     }
 
@@ -99,9 +99,9 @@ public class Entity {
 //Need to account for the unitscale, since the map coordinates will be in pixels
         float minX;
         float minY;
-        if (MapManager.UNIT_SCALE > 0) {
-            minX = _nextPlayerPosition.x / MapManager.UNIT_SCALE;
-            minY = _nextPlayerPosition.y / MapManager.UNIT_SCALE;
+        if (com.libgdx.triception.maps.MapManager.UNIT_SCALE > 0) {
+            minX = _nextPlayerPosition.x / com.libgdx.triception.maps.MapManager.UNIT_SCALE;
+            minY = _nextPlayerPosition.y / com.libgdx.triception.maps.MapManager.UNIT_SCALE;
         } else {
             minX = _nextPlayerPosition.x;
             minY = _nextPlayerPosition.y;

@@ -1,4 +1,7 @@
-package com.libgdx.triception;
+package com.libgdx.triception.esc;
+
+import com.badlogic.gdx.utils.Json;
+import com.libgdx.triception.Entity2;
 
 public class EntityFactory {
 
@@ -12,31 +15,31 @@ public class EntityFactory {
 
     public static String PLAYER_CONFIG = "scripts/player.json";
 
-    static public Entity getEntity(EntityType entityType) {
+    static public com.libgdx.triception.esc.Entity getEntity(EntityType entityType) {
 
-        Entity entity = null;
+        com.libgdx.triception.esc.Entity entity = null;
 
         switch (entityType) {
             case PLAYER:
-                entity = new Entity(
+                entity = new Entity2(
                         new PlayerInputComponent(),
                         new PlayerPhysicsComponent(),
                         new PlayerGraphicsComponent());
                 entity.setEntityConfig(
-                        Entity.getEntityConfig(
+                        com.libgdx.triception.esc.Entity.getEntityConfig(
                                 EntityFactory.PLAYER_CONFIG));
                 entity.sendMessage(
                         Component.MESSAGE.LOAD_ANIMATIONS,
                         _json.toJson(entity.getEntityConfig()));
                 return entity;
             case DEMO_PLAYER:
-                entity = new Entity(
+                entity = new com.libgdx.triception.esc.Entity(
                         new NPCInputComponent(),
                         new PlayerPhysicsComponent(),
                         new PlayerGraphicsComponent());
                 return entity;
             case NPC:
-                entity = new Entity(
+                entity = new com.libgdx.triception.esc.Entity(
                         new NPCInputComponent(),
                         new NPCPhysicsComponent(),
                         new NPCGraphicsComponent());
