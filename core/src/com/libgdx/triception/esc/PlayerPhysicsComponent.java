@@ -42,11 +42,10 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                 _nextEntityPosition.set(_currentEntityPosition.x, _currentEntityPosition.y);
 
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_STATE.toString())) {
-                _state = _json.fromJson(com.libgdx.triception.esc.Entity.State.class, string[1]);
+                _state = _json.fromJson(Entity.State.class, string[1]);
 
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
-                _currentDirection = _json.fromJson(com.libgdx.triception.esc.Entity.Direction.class,
-                        string[1]);
+                _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
 
             } else if (string[0].equalsIgnoreCase(MESSAGE.INIT_SELECT_ENTITY.toString())) {
                 _mouseSelectCoordinates = _json.fromJson(Vector3.class, string[1]);
@@ -64,9 +63,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
             selectMapEntityCandidate(mapMgr);
             _isMouseSelectEnabled = false;
         }
-        if (!isCollisionWithMapLayer(entity, mapMgr) &&
-                !isCollisionWithMapEntities(entity, mapMgr) &&
-                _state == Entity.State.WALKING) {
+        if (!isCollisionWithMapLayer(entity, mapMgr) && !isCollisionWithMapEntities(entity, mapMgr) && _state == Entity.State.WALKING) {
             setNextPositionToCurrent(entity);
             Camera camera = mapMgr.getCamera();
             camera.position.set(_currentEntityPosition.x, _currentEntityPosition.y, 0f);
@@ -78,34 +75,35 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         calculateNextPosition(delta);
     }
 
-    private boolean updatePortalLayerActivation(MapManager
-                                                        mapMgr) {
+    private void selectMapEntityCandidate(MapManager mapMgr) {
 
-        private void selectMapEntityCandidate (MapManager mapMgr){
-
-            Array<Entity> currentEntities = mapMgr.getCurrentMapEntities();
+        Array<Entity> currentEntities = mapMgr.getCurrentMapEntities();
 //Convert screen coordinates to world coordinates,
 //then to unit scale coordinates
-            mapMgr.getCamera().unproject(_mouseSelectCoordinates);
-            _mouseSelectCoordinates.x /= MapManager.UNIT_SCALE;
-            _mouseSelectCoordinates.y /= MapManager.UNIT_SCALE;
-            for (Entity mapEntity : currentEntities) {
+        mapMgr.getCamera().unproject(_mouseSelectCoordinates);
+        _mouseSelectCoordinates.x /= Map.UNIT_SCALE;
+        _mouseSelectCoordinates.y /= Map.UNIT_SCALE;
+        for (Entity mapEntity : currentEntities) {
 //Don't break, reset all entities
-                mapEntity.sendMessage(MESSAGE.ENTITY_DESELECTED);
-                Rectangle mapEntityBoundingBox = mapEntity.getCurrentBoundingBox();
-                if (mapEntity.getCurrentBoundingBox().contains(_mouseSelectCoordinates.x, _mouseSelectCoordinates.y)) {
+            mapEntity.sendMessage(MESSAGE.ENTITY_DESELECTED);
+            Rectangle mapEntityBoundingBox = mapEntity.getCurrentBoundingBox();
+            if (mapEntity.getCurrentBoundingBox().contains(_mouseSelectCoordinates.x, _mouseSelectCoordinates.y)) {
 //Check distance
-                    _selectionRay.set(_boundingBox.x, _boundingBox.y, 0.0f, mapEntityBoundingBox.x, mapEntityBoundingBox.y, 0.0f);
-                    float distance = _selectionRay.origin.dst(_selectionRay.direction);
+                _selectionRay.set(_boundingBox.x, _boundingBox.y, 0.0f, mapEntityBoundingBox.x, mapEntityBoundingBox.y, 0.0f);
+                float distance = _selectionRay.origin.dst(_selectionRay.direction);
 
-                    if (distance <= _selectRayMaximumDistance) {
+                if (distance <= _selectRayMaximumDistance) {
 //We have a valid entity selection
 //Picked/Selected
-                        Gdx.app.debug(TAG, "Selected Entity! " + mapEntity.getEntityConfig().getEntityID());
-                        mapEntity.sendMessage(MESSAGE.ENTITY_SELECTED);
-                    }
+                    Gdx.app.debug(TAG, "Selected Entity! " + mapEntity.getEntityConfig().getEntityID());
+                    mapEntity.sendMessage(MESSAGE.ENTITY_SELECTED);
                 }
             }
         }
+    }
+
+    private boolean updatePortalLayerActivation(MapManager mapMgr) {
+
+
     }
 }

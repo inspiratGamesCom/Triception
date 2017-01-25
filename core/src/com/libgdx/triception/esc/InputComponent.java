@@ -33,13 +33,13 @@ public abstract class InputComponent implements Component {
         mouseButtons.put(Mouse.DOACTION, false);
     };
 
-    protected com.libgdx.triception.esc.Entity.Direction _currentDirection;
-    protected com.libgdx.triception.esc.Entity.State _currentState;
+    protected Entity.Direction _currentDirection;
+    protected Entity.State _currentState;
     protected Json _json;
 
-    InputComponent() {
+    protected InputComponent() {
         _json = new Json();
     }
 
-    public abstract void update(com.libgdx.triception.esc.Entity entity, float delta);
+    public abstract void update(Entity entity, float delta);
 }

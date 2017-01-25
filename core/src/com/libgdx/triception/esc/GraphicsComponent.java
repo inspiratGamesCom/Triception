@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
-import com.libgdx.triception.Entity2;
 import com.libgdx.triception.maps.MapManager;
 import com.libgdx.triception.Utility;
 
@@ -15,19 +14,22 @@ import java.util.Hashtable;
 
 public abstract class GraphicsComponent implements Component {
 
-    protected float _frameTime = 0f;
-
-    private com.libgdx.triception.esc.Entity.Direction _currentDirection;
     protected TextureRegion _currentFrame;
-    protected com.libgdx.triception.esc.Entity.State _currentState;
-
-    protected Hashtable<com.libgdx.triception.esc.Entity.AnimationType, Animation> _animations;
+    protected float _frameTime = 0f;
+    protected Entity.Direction _currentDirection;
+    protected Entity.State _currentState;
+    protected Hashtable<Entity.AnimationType, Animation> _animations;
     protected ShapeRenderer _shapeRenderer;
 
     protected GraphicsComponent() {
+
+        _currentState = Entity.State.WALKING;
+        _currentDirection = Entity.Direction.DOWN;
+        _animations = new Hashtable<Entity.AnimationType, Animation>();
+        _shapeRenderer = new ShapeRenderer();
     }
 
-    public abstract void update(Entity2 entity, MapManager mapManager, Batch batch, float delta);
+    public abstract void update(Entity entity, MapManager mapManager, Batch batch, float delta);
 
     protected void updateAnimations(float delta) {
 //Want to avoid overflow
@@ -36,36 +38,84 @@ public abstract class GraphicsComponent implements Component {
 //when changing position
         switch (_currentDirection) {
             case DOWN:
-                if (_currentState == com.libgdx.triception.esc.Entity.State.WALKING) {
-                    Animation animation = _animations.get(com.libgdx.triception.esc.Entity.AnimationType.WALK_DOWN);
+                if (_currentState == Entity.State.WALKING) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_DOWN);
 
                     if (animation == null) return;
                     _currentFrame = (TextureRegion) animation.getKeyFrame(_frameTime);
 
-                } else if (_currentState == com.libgdx.triception.esc.Entity.State.IDLE) {
-                    Animation animation = _animations.get(com.libgdx.triception.esc.Entity.AnimationType.WALK_DOWN);
+                } else if (_currentState == Entity.State.IDLE) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_DOWN);
 
                     if (animation == null) return;
                     _currentFrame = (TextureRegion) animation.getKeyFrames()[0];
 
-                } else if (_currentState == com.libgdx.triception.esc.Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(com.libgdx.triception.esc.Entity.AnimationType.IMMOBILE);
+                } else if (_currentState == Entity.State.IMMOBILE) {
+                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
 
                     if (animation == null) return;
                     _currentFrame = (TextureRegion) animation.getKeyFrame(_frameTime);
                 }
                 break;
             case LEFT:
-                ...
+                if (_currentState == Entity.State.WALKING) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_LEFT);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrame(_frameTime);
+
+                } else if(_currentState == Entity.State.IDLE) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_LEFT);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrames()[0];
+
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrame(_frameTime);
+                }
                 break;
             case UP:
-                ...
+                if (_currentState == Entity.State.WALKING) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_UP);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrame(_frameTime);
+
+                } else if(_currentState == Entity.State.IDLE) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_UP);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrames()[0];
+
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrame(_frameTime);
+                }
                 break;
             case RIGHT:
-                ...
-                break;
-            default:
-                break;
+                if (_currentState == Entity.State.WALKING) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrame(_frameTime);
+
+                } else if(_currentState == Entity.State.IDLE) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrames()[0];
+
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+
+                    if( animation == null ) return;
+                    _currentFrame = (TextureRegion) animation.getKeyFrame(_frameTime);
+                }
         }
     }
 
@@ -78,15 +128,8 @@ public abstract class GraphicsComponent implements Component {
         Utility.loadTextureAsset(secondTexture);
         Texture texture2 = Utility.getTextureAsset(secondTexture);
 
-        TextureRegion[][] texture1Frames = TextureRegion.split(
-                texture1,
-                com.libgdx.triception.esc.Entity.FRAME_WIDTH,
-                com.libgdx.triception.esc.Entity.FRAME_HEIGHT);
-
-        TextureRegion[][] texture2Frames = TextureRegion.split(
-                texture2,
-                com.libgdx.triception.esc.Entity.FRAME_WIDTH,
-                com.libgdx.triception.esc.Entity.FRAME_HEIGHT);
+        TextureRegion[][] texture1Frames = TextureRegion.split(texture1, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
+        TextureRegion[][] texture2Frames = TextureRegion.split(texture2, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
 
         Array<TextureRegion> animationKeyFrames = new Array<TextureRegion>(2);
         GridPoint2 point = points.first();
@@ -101,10 +144,7 @@ public abstract class GraphicsComponent implements Component {
         Utility.loadTextureAsset(textureName);
         Texture texture = Utility.getTextureAsset(textureName);
 
-        TextureRegion[][] textureFrames = TextureRegion.split(
-                texture,
-                com.libgdx.triception.esc.Entity.FRAME_WIDTH,
-                com.libgdx.triception.esc.Entity.FRAME_HEIGHT);
+        TextureRegion[][] textureFrames = TextureRegion.split(texture, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
 
         Array<TextureRegion> animationKeyFrames = new Array<TextureRegion>(points.size);
         for (GridPoint2 point : points) {
