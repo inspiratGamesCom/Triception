@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.libgdx.triception.maps.MapManager;
 import com.libgdx.triception.Utility;
 
@@ -14,12 +16,14 @@ import java.util.Hashtable;
 
 public abstract class GraphicsComponent implements Component {
 
+    protected Vector2 _currentPosition;
     protected TextureRegion _currentFrame;
     protected float _frameTime = 0f;
     protected Entity.Direction _currentDirection;
     protected Entity.State _currentState;
     protected Hashtable<Entity.AnimationType, Animation> _animations;
     protected ShapeRenderer _shapeRenderer;
+    protected Json _json;
 
     protected GraphicsComponent() {
 
@@ -27,6 +31,7 @@ public abstract class GraphicsComponent implements Component {
         _currentDirection = Entity.Direction.DOWN;
         _animations = new Hashtable<Entity.AnimationType, Animation>();
         _shapeRenderer = new ShapeRenderer();
+        this._json = new Json();
     }
 
     public abstract void update(Entity entity, MapManager mapManager, Batch batch, float delta);

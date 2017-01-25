@@ -1,7 +1,6 @@
 package com.libgdx.triception.esc;
 
 import com.badlogic.gdx.utils.Json;
-import com.libgdx.triception.esc.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,4 +41,12 @@ public abstract class InputComponent implements Component {
     }
 
     public abstract void update(Entity entity, float delta);
+
+    public static void clear(){
+        keys.put(Keys.LEFT, false);
+        keys.put(Keys.RIGHT, false);
+        keys.put(Keys.UP, false);
+        keys.put(Keys.DOWN, false);
+        keys.put(Keys.QUIT, false);
+    }
 }

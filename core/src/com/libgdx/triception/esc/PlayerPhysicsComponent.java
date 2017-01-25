@@ -2,11 +2,15 @@ package com.libgdx.triception.esc;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Array;
+import com.libgdx.triception.maps.Map;
+import com.libgdx.triception.maps.MapFactory;
 import com.libgdx.triception.maps.MapManager;
 
 public class PlayerPhysicsComponent extends PhysicsComponent {
@@ -15,14 +19,11 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
 
     private Vector3 _mouseSelectCoordinates;
     private boolean _isMouseSelectEnabled = false;
-    private Ray _selectionRay;
-    private float _selectRayMaximumDistance = 32.0f;
 
     private Entity.State _state;
 
     public PlayerPhysicsComponent() {
         _mouseSelectCoordinates = new Vector3(0, 0, 0);
-        _selectionRay = new Ray(new Vector3(), new Vector3());
     }
 
     @Override
@@ -103,7 +104,38 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     }
 
     private boolean updatePortalLayerActivation(MapManager mapMgr) {
+        MapLayer mapPortalLayer = mapMgr.getPortalLayer();
 
+        if (mapPortalLayer == null) {
+            return false;
+        }
 
+        Rectangle rectangle = null;
+
+        for (MapObject object : mapPortalLayer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                rectangle = ((RectangleMapObject) object).getRectangle();
+
+                if (_boundingBox.overlaps(rectangle)) {
+                    String mapName = object.getName();
+                    if (mapName == null) {
+                        return false;
+                    }
+
+                    mapMgr.setClosestStartPositionFromScaledUnits(_currentEntityPosition);
+                    mapMgr.loadMap(MapFactory.MapType.valueOf(mapName));
+
+                    _currentEntityPosition.x = mapMgr.getPlayerStartUnitScaled().x;
+                    _currentEntityPosition.y = mapMgr.getPlayerStartUnitScaled().y;
+                    _nextEntityPosition.x = _currentEntityPosition.x;
+                    _nextEntityPosition.y = _currentEntityPosition.y;
+
+                    Gdx.app.debug(TAG, "Portal Activated");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+
 }

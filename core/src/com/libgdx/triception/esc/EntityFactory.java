@@ -1,7 +1,6 @@
 package com.libgdx.triception.esc;
 
 import com.badlogic.gdx.utils.Json;
-import com.libgdx.triception.Entity2;
 
 public class EntityFactory {
 
@@ -15,13 +14,13 @@ public class EntityFactory {
 
     public static String PLAYER_CONFIG = "scripts/player.json";
 
-    static public com.libgdx.triception.esc.Entity getEntity(EntityType entityType) {
+    static public Entity getEntity(EntityType entityType) {
 
-        com.libgdx.triception.esc.Entity entity = null;
+        Entity entity = null;
 
         switch (entityType) {
             case PLAYER:
-                entity = new Entity2(
+                entity = new Entity(
                         new PlayerInputComponent(),
                         new PlayerPhysicsComponent(),
                         new PlayerGraphicsComponent());

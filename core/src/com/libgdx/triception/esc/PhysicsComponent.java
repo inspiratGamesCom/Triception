@@ -6,8 +6,11 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.libgdx.triception.maps.Map;
 import com.libgdx.triception.maps.MapManager;
 
 public abstract class PhysicsComponent implements Component {
@@ -20,6 +23,8 @@ public abstract class PhysicsComponent implements Component {
     protected Entity.Direction _currentDirection;
     public Rectangle _boundingBox;
     protected BoundingBoxLocation _boundingBoxLocation;
+    protected Ray _selectionRay;
+    protected float _selectRayMaximumDistance = 32.0f;
     protected Json _json;
 
     public static enum BoundingBoxLocation {
@@ -34,6 +39,7 @@ public abstract class PhysicsComponent implements Component {
         this._velocity = new Vector2(2f,2f);
         this._boundingBox = new Rectangle();
         this._boundingBoxLocation = BoundingBoxLocation.BOTTOM_LEFT;
+        _selectionRay = new Ray(new Vector3(), new Vector3());
         this._json = new Json();
     }
 
@@ -165,9 +171,9 @@ public abstract class PhysicsComponent implements Component {
 //coordinates will be in pixels
         float minX;
         float minY;
-        if (MapManager.UNIT_SCALE > 0) {
-            minX = _nextEntityPosition.x / MapManager.UNIT_SCALE;
-            minY = _nextEntityPosition.y / MapManager.UNIT_SCALE;
+        if (Map.UNIT_SCALE > 0) {
+            minX = _nextEntityPosition.x / Map.UNIT_SCALE;
+            minY = _nextEntityPosition.y / Map.UNIT_SCALE;
         } else {
             minX = _nextEntityPosition.x;
             minY = _nextEntityPosition.y;
@@ -192,9 +198,9 @@ public abstract class PhysicsComponent implements Component {
 //coordinates will be in pixels
         float minX;
         float minY;
-        if (MapManager.UNIT_SCALE > 0) {
-            minX = position.x / MapManager.UNIT_SCALE;
-            minY = position.y / MapManager.UNIT_SCALE;
+        if (Map.UNIT_SCALE > 0) {
+            minX = position.x / Map.UNIT_SCALE;
+            minY = position.y / Map.UNIT_SCALE;
         } else {
             minX = position.x;
             minY = position.y;

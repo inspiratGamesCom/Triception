@@ -1,7 +1,5 @@
 package com.libgdx.triception.maps;
 
-import com.badlogic.gdx.maps.Map;
-
 import java.util.Hashtable;
 
 public class MapFactory {

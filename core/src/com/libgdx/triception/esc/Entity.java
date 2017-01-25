@@ -7,14 +7,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
-import com.libgdx.triception.Entity2;
 import com.libgdx.triception.maps.MapManager;
 
 import java.util.ArrayList;
 
 public class Entity {
 
-    private static final String TAG = Entity2.class.getSimpleName();
+    private static final String TAG = Entity.class.getSimpleName();
 
     public static enum Direction {
         UP,
