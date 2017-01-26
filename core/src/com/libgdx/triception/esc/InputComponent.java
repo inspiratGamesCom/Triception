@@ -7,6 +7,10 @@ import java.util.Map;
 
 public abstract class InputComponent implements Component {
 
+    protected Entity.Direction _currentDirection = null;
+    protected Entity.State _currentState = null;
+    protected Json _json;
+
     protected enum Keys {
         LEFT, RIGHT, UP, DOWN, QUIT
     }
@@ -32,21 +36,10 @@ public abstract class InputComponent implements Component {
         mouseButtons.put(Mouse.DOACTION, false);
     };
 
-    protected Entity.Direction _currentDirection;
-    protected Entity.State _currentState;
-    protected Json _json;
-
-    protected InputComponent() {
+    InputComponent(){
         _json = new Json();
     }
 
     public abstract void update(Entity entity, float delta);
 
-    public static void clear(){
-        keys.put(Keys.LEFT, false);
-        keys.put(Keys.RIGHT, false);
-        keys.put(Keys.UP, false);
-        keys.put(Keys.DOWN, false);
-        keys.put(Keys.QUIT, false);
-    }
 }

@@ -7,10 +7,11 @@ import com.libgdx.triception.esc.Component;
 import com.libgdx.triception.esc.Entity;
 import com.libgdx.triception.esc.EntityConfig;
 import com.libgdx.triception.esc.EntityFactory;
+import com.libgdx.triception.esc.PlayerPhysicsComponent;
 
-public class TownMap extends Map {
+public class TownMap extends Map{
 
-    private static final String TAG = TownMap.class.getSimpleName();
+    private static final String TAG = PlayerPhysicsComponent.class.getSimpleName();
 
     private static String _mapPath = "maps/town.tmx";
     private static String _townGuardWalking = "scripts/town_guard_walking.json";
@@ -19,27 +20,36 @@ public class TownMap extends Map {
     private static String _townInnKeeper = "scripts/town_innkeeper.json";
     private static String _townFolk = "scripts/town_folk.json";
 
-    TownMap() {
-
+    TownMap(){
         super(MapFactory.MapType.TOWN, _mapPath);
-        for (Vector2 position : _npcStartPositions) {
+
+        for( Vector2 position: _npcStartPositions){
             _mapEntities.add(initEntity(Entity.getEntityConfig(_townGuardWalking), position));
         }
-//Special cases
+
+        //Special cases
         _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townBlacksmith)));
         _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townMage)));
         _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townInnKeeper)));
-//When we have multiple configs in one file
+
+        //When we have multiple configs in one file
         Array<EntityConfig> configs = Entity.getEntityConfigs(_townFolk);
-        for (EntityConfig config : configs) {
+        for(EntityConfig config: configs){
             _mapEntities.add(initSpecialEntity(config));
         }
     }
 
-    private Entity initEntity(EntityConfig entityConfig, Vector2 position) {
+    @Override
+    public void updateMapEntities(MapManager mapMgr, Batch batch, float delta){
+        for( int i=0; i < _mapEntities.size; i++){
+            _mapEntities.get(i).update(mapMgr, batch, delta);
+        }
+    }
 
-        Entity entity = EntityFactory._instance.getEntity(EntityFactory.EntityType.NPC);
+    private Entity initEntity(EntityConfig entityConfig, Vector2 position){
+        Entity entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
         entity.setEntityConfig(entityConfig);
+
         entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, _json.toJson(entity.getEntityConfig()));
         entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, _json.toJson(position));
         entity.sendMessage(Component.MESSAGE.INIT_STATE, _json.toJson(entity.getEntityConfig().getState()));
@@ -48,19 +58,12 @@ public class TownMap extends Map {
         return entity;
     }
 
-    private Entity initSpecialEntity(EntityConfig entityConfig) {
-        Vector2 position = new Vector2(0, 0);
+    private Entity initSpecialEntity(EntityConfig entityConfig){
+        Vector2 position = new Vector2(0,0);
 
-        if (_specialNPCStartPositions.containsKey(entityConfig.getEntityID())) {
-            position = _specialNPCStartPositions.get(entityConfig.getEntityID());
+        if( _specialNPCStartPositions.containsKey(entityConfig.getEntityID()) ) {
+             position = _specialNPCStartPositions.get(entityConfig.getEntityID());
         }
         return initEntity(entityConfig, position);
-    }
-
-    @Override
-    public void updateMapEntities(MapManager mapMgr, Batch batch, float delta) {
-        for (int i = 0; i < _mapEntities.size; i++) {
-            _mapEntities.get(i).update(mapMgr, batch, delta);
-        }
     }
 }

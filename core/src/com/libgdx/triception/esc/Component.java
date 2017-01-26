@@ -1,10 +1,11 @@
 package com.libgdx.triception.esc;
 
+
 public interface Component {
 
     public static final String MESSAGE_TOKEN = ":::::";
 
-    public static enum MESSAGE {
+    public static enum MESSAGE{
         CURRENT_POSITION,
         INIT_START_POSITION,
         CURRENT_DIRECTION,
@@ -20,6 +21,5 @@ public interface Component {
     }
 
     void dispose();
-
     void receiveMessage(String message);
 }
