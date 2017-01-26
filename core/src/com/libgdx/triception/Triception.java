@@ -6,17 +6,18 @@ import com.libgdx.triception.screens.MainGameScreen;
 
 public class Triception implements ApplicationListener{
 
-    public static final MainGameScreen _mainGameScreen = new MainGameScreen();
+    public MainGameScreen _mainGameScreen;
 
     @Override
     public void create() {
+        _mainGameScreen = new MainGameScreen();
         _mainGameScreen.show();
 
     }
 
     @Override
     public void resize(int width, int height) {
-
+        _mainGameScreen.resize(width, height);
     }
 
     @Override

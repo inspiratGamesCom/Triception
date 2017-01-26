@@ -4,7 +4,10 @@ import com.badlogic.gdx.utils.Json;
 
 public class EntityFactory {
 
-    private static Json _json = new Json();
+    private static final String TAG = EntityFactory.class.getSimpleName();
+
+    public static String PLAYER_CONFIG = "scripts/player.json";
+    public static EntityFactory _instance = new EntityFactory();
 
     public static enum EntityType {
         PLAYER,
@@ -12,9 +15,13 @@ public class EntityFactory {
         NPC
     }
 
-    public static String PLAYER_CONFIG = "scripts/player.json";
+    private Json _json = new Json();
 
-    static public Entity getEntity(EntityType entityType) {
+    private EntityFactory() {
+        this._json = new Json();
+    }
+
+    public Entity getEntity(EntityType entityType) {
 
         Entity entity = null;
 
@@ -24,21 +31,17 @@ public class EntityFactory {
                         new PlayerInputComponent(),
                         new PlayerPhysicsComponent(),
                         new PlayerGraphicsComponent());
-                entity.setEntityConfig(
-                        com.libgdx.triception.esc.Entity.getEntityConfig(
-                                EntityFactory.PLAYER_CONFIG));
-                entity.sendMessage(
-                        Component.MESSAGE.LOAD_ANIMATIONS,
-                        _json.toJson(entity.getEntityConfig()));
+                entity.setEntityConfig(Entity.getEntityConfig(EntityFactory.PLAYER_CONFIG));
+                entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, _json.toJson(entity.getEntityConfig()));
                 return entity;
             case DEMO_PLAYER:
-                entity = new com.libgdx.triception.esc.Entity(
+                entity = new Entity(
                         new NPCInputComponent(),
                         new PlayerPhysicsComponent(),
                         new PlayerGraphicsComponent());
                 return entity;
             case NPC:
-                entity = new com.libgdx.triception.esc.Entity(
+                entity = new Entity(
                         new NPCInputComponent(),
                         new NPCPhysicsComponent(),
                         new NPCGraphicsComponent());

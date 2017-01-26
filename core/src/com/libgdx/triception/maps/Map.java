@@ -25,6 +25,10 @@ public class Map {
     protected final static String SPAWNS_LAYER = "MAP_SPAWNS_LAYER";
     protected final static String PORTAL_LAYER = "MAP_PORTAL_LAYER";
 
+    public final static String BACKGROUND_LAYER = "Background_Layer";
+    public final static String GROUND_LAYER = "Ground_Layer";
+    public final static String DECORATION_LAYER = "Decoration_Layer";
+
     //Starting locations
     protected final static String PLAYER_START = "PLAYER_START";
     protected final static String NPC_START = "NPC_START";

@@ -10,13 +10,14 @@ public class EntityConfig {
     private Entity.Direction direction;
     private Array<AnimationConfig> animationConfig;
 
-    public EntityConfig() {}
+    public EntityConfig() {
+    }
 
     public void setEntityID(String entityID) {
         this.entityID = entityID;
     }
 
-    public void setDirection(com.libgdx.triception.esc.Entity.Direction direction) {
+    public void setDirection(Entity.Direction direction) {
         this.direction = direction;
     }
 
@@ -40,14 +41,14 @@ public class EntityConfig {
         return animationConfig;
     }
 
-    static public class AnimationConfig{
+    static public class AnimationConfig {
 
         private float frameDuration = 1.0f;
         private Entity.AnimationType animationType;
         private Array<String> texturePaths;
         private Array<GridPoint2> gridPoints;
 
-        public AnimationConfig(){
+        public AnimationConfig() {
             animationType = Entity.AnimationType.IDLE;
             texturePaths = new Array<String>();
             gridPoints = new Array<GridPoint2>();

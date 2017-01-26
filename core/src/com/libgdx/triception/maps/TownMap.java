@@ -38,7 +38,7 @@ public class TownMap extends Map {
 
     private Entity initEntity(EntityConfig entityConfig, Vector2 position) {
 
-        Entity entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
+        Entity entity = EntityFactory._instance.getEntity(EntityFactory.EntityType.NPC);
         entity.setEntityConfig(entityConfig);
         entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, _json.toJson(entity.getEntityConfig()));
         entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, _json.toJson(position));
