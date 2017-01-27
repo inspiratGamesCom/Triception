@@ -1,6 +1,7 @@
 package com.libgdx.triception.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +12,7 @@ import com.libgdx.triception.esc.Entity;
 import com.libgdx.triception.esc.EntityFactory;
 import com.libgdx.triception.maps.Map;
 import com.libgdx.triception.maps.MapManager;
+import com.libgdx.triception.ui.PlayerHUD;
 
 public class MainGameScreen implements Screen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
@@ -30,9 +32,21 @@ public class MainGameScreen implements Screen {
 	private static MapManager _mapMgr;
 	private Json _json;
 
+    private OrthographicCamera _hudCamera = null;
+    private InputMultiplexer _multiplexer;
+    private static PlayerHUD _playerHUD;
+
 	public MainGameScreen(){
 		_mapMgr = new MapManager();
 		_json = new Json();
+
+        _hudCamera = new OrthographicCamera();
+        _hudCamera.setToOrtho(false, VIEWPORT.physicalWidth, VIEWPORT.physicalHeight);
+        _playerHUD = new PlayerHUD(_hudCamera, _player);
+        _multiplexer = new InputMultiplexer();
+        _multiplexer.addProcessor(_playerHUD.getStage());
+        _multiplexer.addProcessor(_player.getInputProcessor());
+        Gdx.input.setInputProcessor(_multiplexer);
 	}
 
 	private static Entity _player;
