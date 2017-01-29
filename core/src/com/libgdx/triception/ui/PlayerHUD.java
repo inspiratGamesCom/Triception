@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.libgdx.triception.esc.Entity;
+import com.libgdx.triception.profiles.ProfileManager;
+import com.libgdx.triception.profiles.ProfileObserver;
 
 public class PlayerHUD implements Screen, ProfileObserver {
 
@@ -22,6 +24,7 @@ public class PlayerHUD implements Screen, ProfileObserver {
     private Entity _player;
 
     public PlayerHUD(Camera camera, Entity player) {
+
         _camera = camera;
         _player = player;
         _viewport = new ScreenViewport(_camera);
@@ -35,21 +38,21 @@ public class PlayerHUD implements Screen, ProfileObserver {
         _inventoryUI = new InventoryUI();
         _inventoryUI.setMovable(false);
         _inventoryUI.setVisible(false);
-        _inventoryUI.setPosition(_stage.getWidth()/2, 0);
+        _inventoryUI.setPosition(_stage.getWidth() / 2, 0);
 
         _stage.addActor(_statusUI);
         _stage.addActor(_inventoryUI);
 
         //add tooltips to the stage
         Array<Actor> actors = _inventoryUI.getInventoryActors();
-        for(Actor actor : actors){
+        for (Actor actor : actors) {
             _stage.addActor(actor);
         }
 
         ImageButton inventoryButton = _statusUI.getInventoryButton();
         inventoryButton.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
-                _inventoryUI.setVisible(_inventoryUI.isVisible()?false:true);
+            public void clicked(InputEvent event, float x, float y) {
+                _inventoryUI.setVisible(_inventoryUI.isVisible() ? false : true);
             }
         });
     }
@@ -60,23 +63,23 @@ public class PlayerHUD implements Screen, ProfileObserver {
 
     @Override
     public void onNotify(ProfileManager profileManager, ProfileEvent event) {
-        switch(event){
+        switch (event) {
             case PROFILE_LOADED:
                 Array<InventoryItemLocation> inventory = profileManager.getProperty("playerInventory", Array.class);
-                if( inventory != null && inventory.size > 0 ){
+                if (inventory != null && inventory.size > 0) {
                     _inventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory);
-                }else{
+                } else {
                     //add default items if nothing is found
                     Array<InventoryItem.ItemTypeID> items = _player.getEntityConfig().getInventory();
                     Array<InventoryItemLocation> itemLocations = new Array<InventoryItemLocation>();
-                    for( int i = 0; i < items.size; i++){
+                    for (int i = 0; i < items.size; i++) {
                         itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1));
                     }
                     _inventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), itemLocations);
                 }
 
                 Array<InventoryItemLocation> equipInventory = profileManager.getProperty("playerEquipInventory", Array.class);
-                if( equipInventory != null && equipInventory.size > 0 ){
+                if (equipInventory != null && equipInventory.size > 0) {
                     _inventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory);
                 }
 

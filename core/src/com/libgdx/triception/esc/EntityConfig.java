@@ -2,15 +2,19 @@ package com.libgdx.triception.esc;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
+import com.libgdx.triception.ui.InventoryItem;
 
 public class EntityConfig {
+
     Array<AnimationConfig> animationConfig;
+    Array<InventoryItem.ItemTypeID> inventory;
     Entity.State state = Entity.State.IDLE;
     Entity.Direction direction = Entity.Direction.DOWN;
     String entityID;
 
-    EntityConfig(){
+    EntityConfig() {
         animationConfig = new Array<AnimationConfig>();
+        inventory = new Array<InventoryItem.ItemTypeID>();
     }
 
     public String getEntityID() {
@@ -45,13 +49,21 @@ public class EntityConfig {
         this.animationConfig.add(animationConfig);
     }
 
-    static public class AnimationConfig{
+    public Array<InventoryItem.ItemTypeID> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Array<InventoryItem.ItemTypeID> inventory) {
+        this.inventory = inventory;
+    }
+
+    static public class AnimationConfig {
         private float frameDuration = 1.0f;
         private Entity.AnimationType animationType;
         private Array<String> texturePaths;
         private Array<GridPoint2> gridPoints;
 
-        public AnimationConfig(){
+        public AnimationConfig() {
             animationType = Entity.AnimationType.IDLE;
             texturePaths = new Array<String>();
             gridPoints = new Array<GridPoint2>();

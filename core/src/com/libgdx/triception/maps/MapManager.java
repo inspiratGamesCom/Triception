@@ -8,8 +8,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.libgdx.triception.esc.Entity;
+import com.libgdx.triception.profiles.ProfileManager;
+import com.libgdx.triception.profiles.ProfileObserver;
 
-public class MapManager {
+public class MapManager implements ProfileObserver {
+
     private static final String TAG = MapManager.class.getSimpleName();
 
     private Camera _camera;
@@ -88,4 +91,23 @@ public class MapManager {
         this._mapChanged = hasMapChanged;
     }
 
+    @Override
+    public void onNotify(ProfileManager profileManager, ProfileEvent event) {
+
+        switch (event) {
+            case PROFILE_LOADED:
+                String currentMap = profileManager.getProperty("currentMapType", String.class);
+                MapFactory.MapType mapType;
+                if (currentMap == null || currentMap.isEmpty()) {
+                    mapType = MapFactory.MapType.TOWN;
+                } else {
+                    mapType = MapFactory.MapType.valueOf(currentMap);
+                }
+                loadMap(mapType);
+                break;
+            case SAVING_PROFILE:
+                profileManager.setProperty("currentMapType", _currentMap._currentMapType.toString());
+                break;
+        }
+    }
 }

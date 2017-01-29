@@ -1,6 +1,7 @@
 package com.libgdx.triception.esc;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -107,6 +108,10 @@ public class Entity {
 		_graphicsComponent.update(this, mapMgr, batch, delta);
 	}
 
+	public void updateInput(float delta){
+		_inputComponent.update(this, delta);
+	}
+
 	public void dispose(){
 		for(Component component: _components){
 			component.dispose();
@@ -115,6 +120,10 @@ public class Entity {
 
 	public Rectangle getCurrentBoundingBox(){
 		return _physicsComponent._boundingBox;
+	}
+
+	public InputProcessor getInputProcessor(){
+		return _inputComponent;
 	}
 
 	public void setEntityConfig(EntityConfig entityConfig){

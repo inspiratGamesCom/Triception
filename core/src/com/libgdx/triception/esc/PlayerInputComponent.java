@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 
-public class PlayerInputComponent extends InputComponent implements InputProcessor {
+public class PlayerInputComponent extends InputComponent {
 
 	private final static String TAG = PlayerInputComponent.class.getSimpleName();
 	private Vector3 _lastMouseCoordinates;
@@ -13,7 +13,6 @@ public class PlayerInputComponent extends InputComponent implements InputProcess
 	public PlayerInputComponent(){
 		//Gdx.app.debug(TAG, "Construction" );
 		this._lastMouseCoordinates = new Vector3();
-		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
