@@ -87,7 +87,7 @@ public class ConversationUI extends Window {
 
     public void loadConversation(EntityConfig entityConfig) {
         String fullFilenamePath = entityConfig.getConversationConfigPath();
-        this.setTitle("");
+        this.getTitleLabel().setText("");
 
         clearDialog();
 
@@ -97,7 +97,7 @@ public class ConversationUI extends Window {
         }
 
         _currentEntityID = entityConfig.getEntityID();
-        this.setTitle(entityConfig.getEntityID());
+        this.getTitleLabel().setText(entityConfig.getEntityID());
 
         ConversationGraph graph = _json.fromJson(ConversationGraph.class, Gdx.files.internal(fullFilenamePath));
         setConversationGraph(graph);

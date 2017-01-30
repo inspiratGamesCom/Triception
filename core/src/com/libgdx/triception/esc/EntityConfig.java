@@ -11,6 +11,7 @@ public class EntityConfig {
     Entity.State state = Entity.State.IDLE;
     Entity.Direction direction = Entity.Direction.DOWN;
     String entityID;
+    String conversationConfigPath;
 
     EntityConfig() {
         animationConfig = new Array<AnimationConfig>();
@@ -39,6 +40,14 @@ public class EntityConfig {
 
     public void setState(Entity.State state) {
         this.state = state;
+    }
+
+    public String getConversationConfigPath() {
+        return conversationConfigPath;
+    }
+
+    public void setConversationConfigPath(String conversationConfigPath) {
+        this.conversationConfigPath = conversationConfigPath;
     }
 
     public Array<AnimationConfig> getAnimationConfig() {
