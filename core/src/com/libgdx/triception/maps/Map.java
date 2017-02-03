@@ -17,7 +17,7 @@ import java.util.Hashtable;
 public abstract class Map {
     private static final String TAG = Map.class.getSimpleName();
 
-    public final static float UNIT_SCALE  = 1/16f;
+    public final static float UNIT_SCALE  = 1/64f;
 
     //Map layers
     protected final static String COLLISION_LAYER = "MAP_COLLISION_LAYER";

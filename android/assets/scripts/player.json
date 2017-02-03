@@ -7,7 +7,7 @@ animationConfig: [
 		frameDuration: 0.25
 		animationType: IDLE
 		texturePaths: [
-			sprites/characters/Warrior.png
+			sprites/spritesPj.png
 		]
 		gridPoints: [
 			{

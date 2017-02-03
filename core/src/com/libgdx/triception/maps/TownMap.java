@@ -13,7 +13,7 @@ public class TownMap extends Map{
 
     private static final String TAG = PlayerPhysicsComponent.class.getSimpleName();
 
-    private static String _mapPath = "maps/town.tmx";
+    private static String _mapPath = "maps/triception.tmx";
     private static String _townGuardWalking = "scripts/town_guard_walking.json";
     private static String _townBlacksmith = "scripts/town_blacksmith.json";
     private static String _townMage = "scripts/town_mage.json";
@@ -28,7 +28,7 @@ public class TownMap extends Map{
         }
 
         //Special cases
-        _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townBlacksmith)));
+/*        _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townBlacksmith)));
         _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townMage)));
         _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townInnKeeper)));
 
@@ -36,7 +36,7 @@ public class TownMap extends Map{
         Array<EntityConfig> configs = Entity.getEntityConfigs(_townFolk);
         for(EntityConfig config: configs){
             _mapEntities.add(initSpecialEntity(config));
-        }
+        }*/
     }
 
     @Override

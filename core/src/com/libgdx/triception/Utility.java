@@ -118,6 +118,4 @@ public final class Utility {
 
         return texture;
     }
-
-
 }
