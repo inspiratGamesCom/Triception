@@ -16,6 +16,9 @@ public class Entity {
 	private static final String TAG = Entity.class.getSimpleName();
 	private Json _json;
 
+
+
+
 	private EntityConfig _entityConfig;
 
 	public static enum Direction {
