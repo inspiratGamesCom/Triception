@@ -1,0 +1,8 @@
+{
+playerEquipInventory: []
+playerInventory: []
+currentMapType: {
+	class: java.lang.String
+	value: TOWN
+}
+}
