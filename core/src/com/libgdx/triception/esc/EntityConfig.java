@@ -1,17 +1,17 @@
 package com.libgdx.triception.esc;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
 import com.libgdx.triception.ui.InventoryItem;
 
 public class EntityConfig {
 
-    Array<AnimationConfig> animationConfig;
-    Array<InventoryItem.ItemTypeID> inventory;
-    Entity.State state = Entity.State.IDLE;
-    Entity.Direction direction = Entity.Direction.DOWN;
-    String entityID;
-    String conversationConfigPath;
+    private Array<AnimationConfig> animationConfig;
+    private Array<InventoryItem.ItemTypeID> inventory;
+    private Entity.State state = Entity.State.IDLE;
+    private Entity.Direction direction = Entity.Direction.DOWN;
+    private String entityID;
+    private String textureAtlasPath;
+    private String conversationConfigPath;
 
     EntityConfig() {
         animationConfig = new Array<AnimationConfig>();
@@ -42,6 +42,14 @@ public class EntityConfig {
         this.state = state;
     }
 
+    public String getTextureAtlasPath() {
+        return textureAtlasPath;
+    }
+
+    public void setTextureAtlasPath(String textureAtlasPath) {
+        this.textureAtlasPath = textureAtlasPath;
+    }
+
     public String getConversationConfigPath() {
         return conversationConfigPath;
     }
@@ -67,15 +75,13 @@ public class EntityConfig {
     }
 
     static public class AnimationConfig {
+
         private float frameDuration = 1.0f;
         private Entity.AnimationType animationType;
-        private Array<String> texturePaths;
-        private Array<GridPoint2> gridPoints;
+        private String atlasRegionsName;
 
         public AnimationConfig() {
             animationType = Entity.AnimationType.IDLE;
-            texturePaths = new Array<String>();
-            gridPoints = new Array<GridPoint2>();
         }
 
         public float getFrameDuration() {
@@ -86,20 +92,12 @@ public class EntityConfig {
             this.frameDuration = frameDuration;
         }
 
-        public Array<String> getTexturePaths() {
-            return texturePaths;
+        public String getAtlasRegionsName() {
+            return atlasRegionsName;
         }
 
-        public void setTexturePaths(Array<String> texturePaths) {
-            this.texturePaths = texturePaths;
-        }
-
-        public Array<GridPoint2> getGridPoints() {
-            return gridPoints;
-        }
-
-        public void setGridPoints(Array<GridPoint2> gridPoints) {
-            this.gridPoints = gridPoints;
+        public void setAtlasRegionsName(String atlasRegionsName) {
+            this.atlasRegionsName = atlasRegionsName;
         }
 
         public Entity.AnimationType getAnimationType() {

@@ -27,8 +27,8 @@ public class TownMap extends Map{
             _mapEntities.add(initEntity(Entity.getEntityConfig(_townGuardWalking), position));
         }
 
-        //Special cases
-/*        _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townBlacksmith)));
+      /*  //Special cases
+        _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townBlacksmith)));
         _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townMage)));
         _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townInnKeeper)));
 

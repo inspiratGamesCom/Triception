@@ -118,4 +118,36 @@ public final class Utility {
 
         return texture;
     }
+
+    public static void loadTextureAtlas(String textureFilenamePath) {
+        if (textureFilenamePath == null || textureFilenamePath.isEmpty()) {
+            return;
+        }
+
+        if (_assetManager.isLoaded(textureFilenamePath)) {
+            return;
+        }
+
+        //load asset
+        if (_filePathResolver.resolve(textureFilenamePath).exists()) {
+            _assetManager.load(textureFilenamePath, TextureAtlas.class);
+            //Until we add loading screen, just block until we load the map
+            _assetManager.finishLoadingAsset(textureFilenamePath);
+        } else {
+            Gdx.app.debug(TAG, "Texture doesn't exist!: " + textureFilenamePath);
+        }
+    }
+
+    public static TextureAtlas getTextureAtlas(String textureFilenamePath) {
+        TextureAtlas atlas = null;
+
+        // once the asset manager is done loading
+        if (_assetManager.isLoaded(textureFilenamePath)) {
+            atlas  = _assetManager.get(textureFilenamePath);
+        } else {
+            Gdx.app.debug(TAG, "Texture is not loaded: " + textureFilenamePath);
+        }
+
+        return atlas;
+    }
 }

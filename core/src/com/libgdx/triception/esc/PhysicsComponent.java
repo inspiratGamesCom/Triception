@@ -12,6 +12,7 @@ import com.libgdx.triception.maps.Map;
 import com.libgdx.triception.maps.MapManager;
 
 public abstract class PhysicsComponent implements Component{
+
     private static final String TAG = PhysicsComponent.class.getSimpleName();
 
     public abstract void update(Entity entity, MapManager mapMgr, float delta);

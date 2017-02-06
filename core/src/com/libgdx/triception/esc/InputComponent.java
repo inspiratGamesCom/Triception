@@ -37,7 +37,7 @@ public abstract class InputComponent implements Component, InputProcessor {
         mouseButtons.put(Mouse.DOACTION, false);
     };
 
-    InputComponent(){
+    public InputComponent(){
         _json = new Json();
     }
 

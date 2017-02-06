@@ -4,17 +4,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.libgdx.triception.maps.MapManager;
 
 public class NPCPhysicsComponent extends PhysicsComponent {
+
     private static final String TAG = NPCPhysicsComponent.class.getSimpleName();
 
     private Entity.State _state;
 
-    public NPCPhysicsComponent(){
+    public NPCPhysicsComponent() {
         _boundingBoxLocation = BoundingBoxLocation.CENTER;
         initBoundingBox(0.4f, 0.15f);
     }
 
     @Override
-    public void dispose(){
+    public void dispose() {
     }
 
     @Override
@@ -22,10 +23,10 @@ public class NPCPhysicsComponent extends PhysicsComponent {
         //Gdx.app.debug(TAG, "Got message " + message);
         String[] string = message.split(Component.MESSAGE_TOKEN);
 
-        if( string.length == 0 ) return;
+        if (string.length == 0) return;
 
         //Specifically for messages with 1 object payload
-        if( string.length == 2 ) {
+        if (string.length == 2) {
             if (string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION.toString())) {
                 _currentEntityPosition = _json.fromJson(Vector2.class, string[1]);
                 _nextEntityPosition.set(_currentEntityPosition.x, _currentEntityPosition.y);
@@ -41,11 +42,11 @@ public class NPCPhysicsComponent extends PhysicsComponent {
     public void update(Entity entity, MapManager mapMgr, float delta) {
         updateBoundingBoxPosition(_nextEntityPosition);
 
-        if( _state == Entity.State.IMMOBILE ) return;
+        if (_state == Entity.State.IMMOBILE) return;
 
-        if (    !isCollisionWithMapLayer(entity, mapMgr) &&
+        if (!isCollisionWithMapLayer(entity, mapMgr) &&
                 !isCollisionWithMapEntities(entity, mapMgr) &&
-                _state == Entity.State.WALKING){
+                _state == Entity.State.WALKING) {
             setNextPositionToCurrent(entity);
         } else {
             updateBoundingBoxPosition(_currentEntityPosition);
@@ -54,13 +55,13 @@ public class NPCPhysicsComponent extends PhysicsComponent {
     }
 
     @Override
-    protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr){
+    protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr) {
         //Test against player
-        if( isCollision(entity, mapMgr.getPlayer()) ) {
+        if (isCollision(entity, mapMgr.getPlayer())) {
             return true;
         }
 
-        if( super.isCollisionWithMapEntities(entity, mapMgr) ){
+        if (super.isCollisionWithMapEntities(entity, mapMgr)) {
             return true;
         }
 

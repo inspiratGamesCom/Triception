@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -48,20 +47,14 @@ public class NPCGraphicsComponent extends GraphicsComponent {
                 _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
             }else if (string[0].equalsIgnoreCase(MESSAGE.LOAD_ANIMATIONS.toString())) {
                 EntityConfig entityConfig = _json.fromJson(EntityConfig.class, string[1]);
+                String textureName = entityConfig.getTextureAtlasPath();
                 Array<EntityConfig.AnimationConfig> animationConfigs = entityConfig.getAnimationConfig();
 
-                for( EntityConfig.AnimationConfig animationConfig : animationConfigs ){
-                    Array<String> textureNames = animationConfig.getTexturePaths();
-                    Array<GridPoint2> points = animationConfig.getGridPoints();
+                for (EntityConfig.AnimationConfig animationConfig : animationConfigs) {
+                    String regionsName = animationConfig.getAtlasRegionsName();
                     Entity.AnimationType animationType = animationConfig.getAnimationType();
                     float frameDuration = animationConfig.getFrameDuration();
-                    Animation animation = null;
-
-                    if( textureNames.size == 1) {
-                        animation = loadAnimation(textureNames.get(0), points, frameDuration);
-                    }else if( textureNames.size == 2){
-                        animation = loadAnimation(textureNames.get(0), textureNames.get(1), points, frameDuration);
-                    }
+                    Animation animation = loadAnimation(textureName, regionsName, frameDuration);
 
                     _animations.put(animationType, animation);
                 }
@@ -77,8 +70,12 @@ public class NPCGraphicsComponent extends GraphicsComponent {
             drawSelected(entity, mapMgr);
         }
 
+
         batch.begin();
-        batch.draw(_currentFrame, _currentPosition.x, _currentPosition.y, 1, 1);
+        if (_currentDirection == Entity.Direction.LEFT)
+            batch.draw(_currentFrame, _currentPosition.x, _currentPosition.y, 0.5f, 0.5f, 1, 1, -1, 1, 0);
+        else
+            batch.draw(_currentFrame, _currentPosition.x, _currentPosition.y, 1, 1);
         batch.end();
 
         //Used to graphically debug boundingboxes
