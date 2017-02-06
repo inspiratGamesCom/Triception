@@ -10,7 +10,6 @@ public class MapFactory {
         TOP_WORLD,
         TOWN,
         CASTLE_OF_DOOM
-
     }
 
     static public Map getMap(MapType mapType){
