@@ -39,7 +39,6 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
                 _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
             }
         }
-
     }
 
     @Override
